@@ -10,7 +10,13 @@ class ListeningParty extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['episode_id', 'name', 'start_time'];
+    protected $fillable = ['episode_id', 'name', 'start_time', 'end_time', 'is_active'];
+
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'is_active' => 'boolean'
+    ];
 
     public function episode(): BelongsTo
     {
