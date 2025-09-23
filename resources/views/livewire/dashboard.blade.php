@@ -18,7 +18,7 @@ new class extends Component {
     {
         return [
             'listening_parties' => ListeningParty::all(),
-        ]
+        ];
     }
 
 }
@@ -27,5 +27,5 @@ new class extends Component {
 ?>
 
 <div>
-    <h1>hello world</h1>
+
 </div>
