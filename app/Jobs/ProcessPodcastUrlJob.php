@@ -53,9 +53,17 @@ class ProcessPodcastUrlJob implements ShouldQueue
             // Handle iTunes namespace and duration
             $nameSpaces = $xml->getNamespaces(true);
             $itunesNameSpace = $nameSpaces['itunes'] ?? null;
-            $episodeLength = $itunesNameSpace
-                ? (string) $latestEpisode->children($itunesNameSpace)->duration
-                : null;
+
+
+            $episodeLength = (string) $latestEpisode->children($itunesNameSpace)->duration;
+
+            if (empty($episodeLength)) {
+                $fileSize = (int) $latestEpisode->enclosure['length'];
+                $bitrate = 128000;
+                $durationInSeconds = ceil($fileSize * 8 / $bitrate);
+                $episodeLength = (string) $durationInSeconds;
+            }
+
 
             // Normalize duration
             try {
