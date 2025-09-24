@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\ProcessPodcastUrlJob;
 use App\Models\Episode;
 use App\Models\ListeningParty;
 use Illuminate\Http\RedirectResponse;
@@ -31,6 +32,8 @@ new class extends Component {
             'name' => $this->name,
             'start_time' => $this->start_time
         ]);
+
+        ProcessPodcastUrlJob::dispatch($this->media_url, $listening_party, $episode);
 
         return redirect()->route('listening-parties.show', $listening_party);
         // if there is, use that, if not create a new one
@@ -67,23 +70,25 @@ new class extends Component {
                 @enderror
             </flux:input.group>
 
+
             <flux:input.group @class('flex flex-col gap-1')>
-                <flux:label class="text-sm font-medium text-gray-700">Start Time</flux:label>
-                <flux:description class="text-xs text-gray-500">Enter the start time of the listening party
+                <flux:label class="text-sm font-medium text-gray-700">Podcast</flux:label>
+                <flux:description class="text-xs text-gray-500">Enter the RSS Feed Url to grab the latest episode
                 </flux:description>
-                <flux:input wire:model="start_time" type="date"
+                <flux:input wire:model="media_url"
                 />
-                @error('start_time')
+                @error('media_url')
                 <flux:text size="text-xs" color="red"> {{ $message }}</flux:text>
                 @enderror
             </flux:input.group>
 
             <flux:input.group @class('flex flex-col gap-1')>
-                <flux:label class="text-sm font-medium text-gray-700">Episode</flux:label>
-                <flux:description class="text-xs text-gray-500">Enter the url of the episode</flux:description>
-                <flux:input wire:model="media_url"
+                <flux:label class="text-sm font-medium text-gray-700">Start Time</flux:label>
+                <flux:description class="text-xs text-gray-500">Enter the start time of the listening party
+                </flux:description>
+                <flux:input wire:model="start_time" type="datetime-local" min="{{ now()->format('Y-m-d\TH:i') }}"
                 />
-                @error('media_url')
+                @error('start_time')
                 <flux:text size="text-xs" color="red"> {{ $message }}</flux:text>
                 @enderror
             </flux:input.group>

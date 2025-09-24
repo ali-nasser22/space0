@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('podcasts', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('rss_url')->unique();
             $table->string('hosts')->nullable();
             $table->string('artwork_url')->nullable();
