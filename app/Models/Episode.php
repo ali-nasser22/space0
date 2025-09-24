@@ -11,7 +11,9 @@ class Episode extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['podcast_id', 'title', 'media_url'];
+    protected $fillable = [
+        'podcast_id', 'title', 'media_url',
+    ];
 
     public function podcast(): BelongsTo
     {

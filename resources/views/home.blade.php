@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SPACE-0</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
-    <wireui:scripts/>
 </head>
 <body>
 @livewire('dashboard')
